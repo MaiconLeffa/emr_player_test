@@ -98,13 +98,13 @@ export default function Player() {
         ref={videoRef}
       />
 
-      <div className="absolute bottom-0 w-full bg-white/30 p-5 flex gap-2">
+      <div className="absolute bottom-0 w-full bg-white/30 p-5 flex gap-2 text-white">
         <button onClick={() => changeQuality(-1)}>auto</button>
         {qualities.map((level, index) => (
           <button onClick={() => changeQuality(index)}>{level.height}</button>
         ))}
 
-        <button className="bg-black rounded-full p-2" onClick={play}>
+        <button className="bg-black rounded-full p-2 text-white" onClick={play}>
           Play
         </button>
 
@@ -132,7 +132,7 @@ export default function Player() {
             onClick={() => {
               if (videoRef.current) videoRef.current.playbackRate = speed;
             }}
-            className="w-[60px]"
+            className="w-[60px] text-white"
           >
             {speed}x
           </button>
