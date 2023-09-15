@@ -13,7 +13,7 @@ export default function Player() {
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const isPaused = useRef(true);
+  const [isPaused, setIsPaused] = useState(true);
   const isMovingTimeLine = useRef(false);
   const speeds = [0.25, 0.5, 1, 1.5, 2];
   const [qualities, setQualities] = useState<Level[]>([]);
@@ -60,12 +60,12 @@ export default function Player() {
     const video = videoRef.current;
     if (!video) return;
 
-    if (isPaused.current) {
+    if (isPaused) {
       video.play();
-      isPaused.current = false;
+      setIsPaused(false);
     } else {
       video.pause();
-      isPaused.current = true;
+      setIsPaused(true);
     }
   }
 
@@ -98,14 +98,27 @@ export default function Player() {
         ref={videoRef}
       />
 
-      <div className="absolute bottom-0 w-full bg-white/30 p-5 flex gap-2 text-white">
-        <button onClick={() => changeQuality(-1)}>auto</button>
+      <div className="absolute bottom-0 w-full bg-white/80 p-5 flex gap-2 text-white">
+        <button
+          className="bg-black rounded-full px-3"
+          onClick={() => changeQuality(-1)}
+        >
+          auto
+        </button>
         {qualities.map((level, index) => (
-          <button onClick={() => changeQuality(index)}>{level.height}</button>
+          <button
+            className="bg-black rounded-full px-3"
+            onClick={() => changeQuality(index)}
+          >
+            {level.height}
+          </button>
         ))}
 
-        <button className="bg-black rounded-full p-2 text-white" onClick={play}>
-          Play
+        <button
+          className="bg-black rounded-full p-2 text-white w-[70px]"
+          onClick={play}
+        >
+          {isPaused ? "play" : "pause"}
         </button>
 
         <input
@@ -132,7 +145,7 @@ export default function Player() {
             onClick={() => {
               if (videoRef.current) videoRef.current.playbackRate = speed;
             }}
-            className="w-[60px] text-white"
+            className="w-[60px] text-white bg-black rounded-full"
           >
             {speed}x
           </button>
