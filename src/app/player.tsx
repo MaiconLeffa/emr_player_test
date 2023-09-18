@@ -71,6 +71,7 @@ export default function Player() {
 
   function readyToPlay(e: SyntheticEvent<HTMLVideoElement>) {
     setDuration(e.currentTarget.duration);
+    if (videoRef.current) videoRef.current.removeAttribute("controls");
   }
 
   function changeQuality(level: number) {
@@ -90,10 +91,12 @@ export default function Player() {
   return (
     <main className="h-screen aspect-video relative">
       <video
+        controls={false}
         onCanPlay={readyToPlay}
         onTimeUpdate={(e) =>
           !isMovingTimeLine.current && setProgress(e.currentTarget.currentTime)
         }
+        autoPlay={false}
         className="h-full border aspect-video"
         ref={videoRef}
       />
